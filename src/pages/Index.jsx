@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Box, Container, Heading, Text, VStack, Input, Button, Select, useToast, Image, HStack, Icon } from "@chakra-ui/react";
+import CountryCodeSelect from "../components/CountryCodeSelect";
 import { FaGlobe, FaMicrophone, FaPhone, FaPhoneSlash, FaPlay } from "react-icons/fa";
 
 const Index = () => {
   const [language, setLanguage] = useState("en");
   const [isCalling, setIsCalling] = useState(false);
+  const [countryCode, setCountryCode] = useState("+1");
   const toast = useToast();
 
   const handleCallClick = () => {
@@ -55,9 +57,10 @@ const Index = () => {
             </Select>
           </HStack>
         </Box>
-        <Box w="100%">
+        <HStack w="100%">
+          <CountryCodeSelect selectedCode={countryCode} onCodeChange={(e) => setCountryCode(e.target.value)} />
           <Input placeholder="Enter phone number" isDisabled={isCalling} />
-        </Box>
+        </HStack>
         <Button leftIcon={isCalling ? <FaPhoneSlash /> : <FaPhone />} colorScheme={isCalling ? "red" : "green"} onClick={handleCallClick} isFullWidth>
           {isCalling ? "End Call" : "Start Call"}
         </Button>
